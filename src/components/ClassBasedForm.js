@@ -5,9 +5,13 @@ import {
 } from 'reactstrap'
 
 export default class ClassBasedForm extends React.Component {
-  state = {
-    email: '',
-    password: '',
+  constructor(props) {
+    super(props)
+    this.state = {
+      email: '',
+      password: '',
+      attemptCount: 0,
+    }
   }
 
   handleChange = ( event ) => {
@@ -15,7 +19,10 @@ export default class ClassBasedForm extends React.Component {
     const { target } = event
     const { name } = target
     this.setState({ [ name ] : target.value })
-    console.log(target.value)
+  }
+
+  handleClick = () => {
+    this.setState({ attemptCount: this.state.attemptCount + 1 })
   }
 
   handleSubmit = (e) => {
@@ -24,7 +31,7 @@ export default class ClassBasedForm extends React.Component {
   }
 
   render() {
-    const { email, password } = this.state
+    const { email, password, attemptCount } = this.state
     return (
       <Form onSubmit={ this.handleSubmit }>
         <FormGroup row>
@@ -54,10 +61,21 @@ export default class ClassBasedForm extends React.Component {
           </Col>
         </FormGroup>
         <FormGroup check row>
-          <Col sm={{ size: 10, offset: 8 }}>
-            <Button>Submit</Button>
+          <Col sm={ { size: 10, offset: 8 } }>
+            <Button onClick={ this.handleClick }>Submit</Button>
           </Col>
         </FormGroup>
+        { attemptCount > 0 && attemptCount <= 3 ?
+        <div>
+          <strong>
+            If your password fails after 3 tries, you will be locked out of your account.
+          </strong>
+          <div>Attempted trieds: { attemptCount }</div>
+        </div>
+        : null }
+        { attemptCount > 3 &&
+          <div>You have been locked out of your account</div>
+        }
       </Form>
     )
   }
