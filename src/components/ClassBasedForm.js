@@ -6,12 +6,27 @@ import {
 
 export default class ClassBasedForm extends React.Component {
   state = {
+    email: '',
+    password: '',
+  }
 
+  handleChange = ( event ) => {
+    event.preventDefault()
+    const { target } = event
+    const { name } = target
+    this.setState({ [ name ] : target.value })
+    console.log(target.value)
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(this.state)
   }
 
   render() {
+    const { email, password } = this.state
     return (
-      <Form>
+      <Form onSubmit={ this.handleSubmit }>
         <FormGroup row>
           <Label for="exampleEmail" sm={ 2 }>Email</Label>
           <Col sm={ 8 }>
@@ -20,6 +35,8 @@ export default class ClassBasedForm extends React.Component {
               name="email"
               id="exampleEmail"
               placeholder="with a placeholder"
+              value={ email }
+              onChange={ this.handleChange }
             />
           </Col>
         </FormGroup>
@@ -31,6 +48,8 @@ export default class ClassBasedForm extends React.Component {
               name="password"
               id="examplePassword"
               placeholder="password placeholder"
+              value={ password }
+              onChange={ this.handleChange }
             />
           </Col>
         </FormGroup>
