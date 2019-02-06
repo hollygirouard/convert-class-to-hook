@@ -34,6 +34,7 @@ export default class ClassBasedForm extends React.Component {
     const { email, password, attemptCount } = this.state
     return (
       <Form onSubmit={ this.handleSubmit }>
+        <h1>Class-Based Form</h1>
         <FormGroup row>
           <Label for="exampleEmail" sm={ 2 }>Email</Label>
           <Col sm={ 8 }>
