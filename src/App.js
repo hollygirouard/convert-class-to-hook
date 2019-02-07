@@ -10,7 +10,6 @@ class App extends Component {
       <div className="App">
         <img src={ Logo } alt="alligator.io logo" width="200" />
         <Container>
-          <h1>Class-Based Form</h1>
           <ClassBasedForm />
         </Container>
       </div>

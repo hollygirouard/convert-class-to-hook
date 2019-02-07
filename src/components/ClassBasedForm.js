@@ -10,30 +10,19 @@ export default class ClassBasedForm extends React.Component {
     this.state = {
       email: '',
       password: '',
-      attemptCount: 0,
     }
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange = ( event ) => {
-    event.preventDefault()
-    const { target } = event
-    const { name } = target
-    this.setState({ [ name ] : target.value })
-  }
-
-  handleClick = () => {
-    this.setState({ attemptCount: this.state.attemptCount + 1 })
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault()
-    console.log(this.state)
+  handleSubmit(e) {
+    e.preventDefault();
+    console.log(this.state);
   }
 
   render() {
-    const { email, password, attemptCount } = this.state
     return (
       <Form onSubmit={ this.handleSubmit }>
+        <h1>Class-Based Form</h1>
         <FormGroup row>
           <Label for="exampleEmail" sm={ 2 }>Email</Label>
           <Col sm={ 8 }>
@@ -41,9 +30,9 @@ export default class ClassBasedForm extends React.Component {
               type="email"
               name="email"
               id="exampleEmail"
-              placeholder="with a placeholder"
-              value={ email }
-              onChange={ this.handleChange }
+              placeholder="email"
+              value={ this.state.email }
+              onChange={ (event) => this.setState({ email: event.target.value }) }
             />
           </Col>
         </FormGroup>
@@ -54,29 +43,18 @@ export default class ClassBasedForm extends React.Component {
               type="password"
               name="password"
               id="examplePassword"
-              placeholder="password placeholder"
-              value={ password }
-              onChange={ this.handleChange }
+              placeholder="password"
+              value={ this.state.password }
+              onChange={ (event) => this.setState({ password: event.target.value })}
             />
           </Col>
         </FormGroup>
         <FormGroup check row>
           <Col sm={ { size: 10, offset: 8 } }>
-            <Button onClick={ this.handleClick }>Submit</Button>
+            <Button>Submit</Button>
           </Col>
         </FormGroup>
-        { attemptCount > 0 && attemptCount <= 3 ?
-        <div>
-          <strong>
-            If your password fails after 3 tries, you will be locked out of your account.
-          </strong>
-          <div>Attempted trieds: { attemptCount }</div>
-        </div>
-        : null }
-        { attemptCount > 3 &&
-          <div>You have been locked out of your account</div>
-        }
       </Form>
     )
   }
-}
+};
